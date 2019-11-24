@@ -129,6 +129,22 @@ Card.delete = function () {
 };
 
 /**
+ * 根据当前账号删除上传号码
+ */
+
+Card.deleteTotalByCurrentUser = function () {
+
+        var ajax = new $ax(Feng.ctxPath + "/card/deleteByCurrentUser", function (data) {
+            Feng.success("删除成功!");
+            Card.table.refresh();
+        }, function (data) {
+            Feng.error("删除失败!" + data.responseJSON.message + "!");
+        });
+        ajax.start();
+
+};
+
+/**
  * 查询选号管理列表
  */
 Card.search = function () {

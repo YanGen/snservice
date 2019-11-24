@@ -6,3 +6,5 @@ service/select-number-server/guns/LICENSE
 service/select-number-server/select-number-build-18001/select-number-build-18001.iml
 
 service/service.iml
+
+*.iml

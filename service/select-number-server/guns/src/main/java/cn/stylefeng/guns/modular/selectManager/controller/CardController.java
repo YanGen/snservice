@@ -1,5 +1,6 @@
 package cn.stylefeng.guns.modular.selectManager.controller;
 
+import cn.stylefeng.guns.core.shiro.ShiroKit;
 import cn.stylefeng.guns.modular.selectManager.service.ImportExcelService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -23,7 +24,9 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 选号管理控制器
@@ -124,6 +127,7 @@ public class CardController extends BaseController {
         card.setInsertTime(time);
         card.setUpdateTime(time);
         card.setDeleteFlag(0);
+        card.setUpUserId(ShiroKit.getUser().getId());
         cardService.insert(card);
         return SUCCESS_TIP;
     }
@@ -162,6 +166,7 @@ public class CardController extends BaseController {
                 c1.setiNumber(number);
                 c1.setPrice(price);
                 c1.setIncludedFee(includedFee);
+                c1.setUpUserId(ShiroKit.getUser().getId());
                 cards.add(c1);
             }
 
@@ -188,7 +193,6 @@ public class CardController extends BaseController {
     @RequestMapping(value = "/update")
     @ResponseBody
     public Object update(Card card) {
-        System.out.println(card.toString());
         long time = Timestamp.valueOf(LocalDateTime.now()).getTime();
         card.setUpdateTime(time);
         cardService.updateById(card);
@@ -216,6 +220,17 @@ public class CardController extends BaseController {
             ii.add(Integer.parseInt(s));
         }
         cardService.deleteBatchIds(ii);
+        return SUCCESS_TIP;
+    }
+    /**
+     * 根据账号删除
+     */
+    @RequestMapping(value = "/deleteByCurrentUser")
+    @ResponseBody
+    public Object deleteByCurrentUser() {
+        Map<String,Object> params = new HashMap<>();
+        params.put("up_user_id", ShiroKit.getUser().getId());
+        cardService.deleteByMap(params);
         return SUCCESS_TIP;
     }
 }

@@ -34,6 +34,7 @@ public class Card extends Model<Card> {
     @TableField("i_number")
     private String iNumber;
     private Float price;
+    private Integer upUserId;
     /**
      * 运营商
      */
@@ -68,6 +69,13 @@ public class Card extends Model<Card> {
      */
     private String status;
 
+    public Integer getUpUserId() {
+        return upUserId;
+    }
+
+    public void setUpUserId(Integer upUserId) {
+        this.upUserId = upUserId;
+    }
 
     public Integer getId() {
         return id;
