@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>service-parent</artifactId>
+        <groupId>com.muhuan</groupId>
+        <version>1.0.0</version>
+        <relativePath>../service-parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>things-register-server</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>things-register-base</module>
+        <module>things-register-common</module>
+        <module>things-register-build-18004</module>
+    </modules>
+
+</project>

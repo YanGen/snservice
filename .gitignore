@@ -8,3 +8,23 @@ service/select-number-server/select-number-build-18001/select-number-build-18001
 service/service.iml
 
 *.iml
+
+service/service-api/target/
+
+service/select-number-server/select-number-base/target/
+
+service/select-number-server/select-number-build-18001/target/
+
+service/seivice-base-provider/file-server-provider/target/file-server-provider-1.0.0.jar
+
+service/seivice-base-provider/file-server-provider/target/
+
+service/.idea/
+
+service/select-number-server/select-number-common/target/
+
+service/things-register-server/things-register-base/target/
+
+service/things-register-server/things-register-build-18004/target/
+
+service/things-register-server/things-register-common/target/
