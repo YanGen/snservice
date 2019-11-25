@@ -10,7 +10,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/select_number?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/things_register?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     # 连接池配置：使用druid
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5

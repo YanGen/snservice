@@ -1,6 +1,6 @@
 package com.muhuan.things.build.util;
 
-import com.muhuan.common.entity.Annotation.FieldAnnotation;
+import com.muhuan.things.common.entity.Annotation.FieldAnnotation;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

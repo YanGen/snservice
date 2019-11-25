@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>com.muhuan</groupId>
-            <artifactId>select-number-common</artifactId>
+            <artifactId>things-register-common</artifactId>
             <version>1.0.0</version>
         </dependency>
         <!-- aop -->

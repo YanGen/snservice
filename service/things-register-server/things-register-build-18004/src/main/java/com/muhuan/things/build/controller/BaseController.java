@@ -35,7 +35,7 @@ public class BaseController<T extends BaseEntityAndDelete>{
 
 
     @PostMapping("/insert")
-    public ResponseResult insert(T t){
+    public ResponseResult insert(@RequestBody T t){
         t= FieldAnnotationUtil.create(t);
         T add = service.add(t);
         return ResultGeneratorUtil.getResultSuccessWithData(add);
@@ -48,7 +48,7 @@ public class BaseController<T extends BaseEntityAndDelete>{
     }
 
     @PutMapping("/update")
-    public ResponseResult update(T t){
+    public ResponseResult update(@RequestBody T t){
         t=FieldAnnotationUtil.create(t);
         boolean update = service.update(t);
         return update?ResultGeneratorUtil.getResultSuccessWithData("修改成功！"):ResultGeneratorUtil.getResultFail("修改失败！");

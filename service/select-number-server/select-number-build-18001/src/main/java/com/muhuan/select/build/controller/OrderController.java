@@ -2,14 +2,10 @@ package com.muhuan.select.build.controller;
 
 import com.muhuan.api.bean.ajax.ResponseResult;
 import com.muhuan.api.util.ResultGeneratorUtil;
-import com.muhuan.common.entity.Card;
 import com.muhuan.common.entity.Order;
-import com.muhuan.select.build.service.BaseService;
 import com.muhuan.select.build.service.OrderService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.Response;
 
 /**
  * @ClassName OrderController
