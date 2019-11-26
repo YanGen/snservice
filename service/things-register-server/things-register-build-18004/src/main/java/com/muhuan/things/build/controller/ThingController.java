@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,10 +29,12 @@ import java.util.Map;
 @RequestMapping("/thing")
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 public class ThingController extends BaseController<Thing> {
+    private final ThingService service;
 
     @Autowired
     public ThingController(ThingService service) {
         super(service);
+        this.service = service;
     }
 
     /**
@@ -50,14 +53,26 @@ public class ThingController extends BaseController<Thing> {
      */
     @RequestMapping(value = "/query")
     @ResponseBody
-    public ResponseResult query(Date date) throws Exception{
+    public ResponseResult queryCurrent(Date date) throws Exception{
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String s = sdf.format(date);
-        Date validateDate =  sdf.parse(s);
-        Map<String,Object> params = new HashMap<>();
-        params.put("execute_time", validateDate);
-        return ResultGeneratorUtil.getResultSuccessWithData(service.getByMap(params));
+        String start = sdf.format(date);
+        start = start+" 00:00:00";
+        Date validateDate =  sdf.parse(start);
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(validateDate);
+        c.add(Calendar.DAY_OF_MONTH, 1);// 今天+1天
+        Date tomorrow = c.getTime();
+
+        return ResultGeneratorUtil.getResultSuccessWithData(service.getByTimeFrame(validateDate,tomorrow));
 
     }
 
+    @RequestMapping("/updateStatusById")
+    @ResponseBody
+    public ResponseResult updateStatusById(Integer thingId) {
+        service.updateStatusById(thingId);
+        return ResultGeneratorUtil.getResultSuccessWithData("成功！");
+    }
 }

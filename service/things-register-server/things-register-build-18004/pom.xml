@@ -76,7 +76,7 @@
     </dependencies>
 
     <build>
-        <finalName>select-number-build-18001</finalName>
+        <finalName>things-register-build-18004</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -84,7 +84,7 @@
                 <version>1.5.4.RELEASE</version>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>com.muhuan.select.build.SelectBuildApplication</mainClass>
+                    <mainClass>com.muhuan.things.build.ThingsRegisterApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

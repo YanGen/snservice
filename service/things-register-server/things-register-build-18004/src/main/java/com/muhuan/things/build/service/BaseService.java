@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class BaseService<T extends BaseEntityAndDelete> {
      * @return
      */
     public T  add(T e){
-        long time = Timestamp.valueOf(LocalDateTime.now()).getTime();
+        long time = Timestamp.valueOf(LocalDateTime.now()).getTime()/1000;
         e.setInsertTime(time);
         e.setUpdateTime(time);
         e.setDeleteFlag(EntityStatus.EXIST.getFlag());
@@ -233,4 +234,6 @@ public class BaseService<T extends BaseEntityAndDelete> {
 
         return mapper.selectPage(pager,entityWrapper);
     }
+
+
 }

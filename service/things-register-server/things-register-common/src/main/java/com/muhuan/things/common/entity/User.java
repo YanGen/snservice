@@ -1,10 +1,7 @@
 package com.muhuan.things.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * @ClassName User
@@ -13,10 +10,11 @@ import lombok.ToString;
  * @Date 2019/11/25
  * @Version 1.0.0
  **/
-@Data
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
+@Data
 @EqualsAndHashCode
+@ToString
 @TableName("things_user")
 public class User {
     private String username;
