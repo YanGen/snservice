@@ -7,16 +7,14 @@ import com.muhuan.api.bean.ajax.ResponseResult;
 import com.muhuan.api.util.ResultGeneratorUtil;
 import com.muhuan.things.build.service.BaseService;
 import com.muhuan.things.build.service.ThingService;
+import com.muhuan.things.build.util.DESUtil;
 import com.muhuan.things.common.entity.Thing;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName ThingController
@@ -44,6 +42,7 @@ public class ThingController extends BaseController<Thing> {
     @ResponseBody
     public ResponseResult insert(@RequestBody Thing thing){
         thing.setStatus(0);
+        thing.setThing(DESUtil.encrypt(thing.getThing()));
         service.add(thing);
         return ResultGeneratorUtil.getResultSuccessWithData("");
     }
@@ -64,8 +63,11 @@ public class ThingController extends BaseController<Thing> {
         c.setTime(validateDate);
         c.add(Calendar.DAY_OF_MONTH, 1);// 今天+1天
         Date tomorrow = c.getTime();
-
-        return ResultGeneratorUtil.getResultSuccessWithData(service.getByTimeFrame(validateDate,tomorrow));
+        List<Thing> things = service.getByTimeFrame(validateDate,tomorrow);
+        for(Thing thing : things){
+            thing.setThing(DESUtil.decrypt(thing.getThing()));
+        }
+        return ResultGeneratorUtil.getResultSuccessWithData(things);
 
     }
 

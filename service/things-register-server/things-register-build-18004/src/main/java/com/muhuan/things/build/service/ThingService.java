@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName ThingService
@@ -23,7 +24,7 @@ public class ThingService extends BaseService<Thing> {
         super(mapper);
     }
 
-    public Object getByTimeFrame(Date date, Date tomorrow) {
+    public List<Thing> getByTimeFrame(Date date, Date tomorrow) {
         QueryWrapper<Thing> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("delete_flag", 0);
         queryWrapper.between("execute_time", date,tomorrow);
