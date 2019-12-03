@@ -89,13 +89,13 @@ public class CardController extends BaseController {
         if(ToolUtil.isEmpty(condition)){
             EntityWrapper<Card> cardEntityWrapper = new EntityWrapper<>();
             Wrapper<Card> cardWrapper = cardEntityWrapper.orderBy("id",false)
-                    .eq("delete_flag", 0);
+                    .eq("delete_flag", 0).last("limit 1000");
             return cardService.selectList(cardWrapper);
         }else {
             EntityWrapper<Card> cardEntityWrapper = new EntityWrapper<>();
             Wrapper<Card> cardWrapper = cardEntityWrapper.like("i_number", condition)
                     .orderBy("id",false)
-                    .eq("delete_flag", 0);
+                    .eq("delete_flag", 0).last("limit 1000");
             return cardService.selectList(cardWrapper);
         }
     }
