@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/number")
-@CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
+//@CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 public class CardController extends BaseController<Card> {
 
     @Autowired
