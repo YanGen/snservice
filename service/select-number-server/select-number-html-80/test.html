@@ -1,0 +1,68 @@
+
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script type="text/javascript" src="/static/js/config.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function (){
+	 	
+	    var urlPre = config.devPro.urlPre;
+		// 基于准备好的dom，初始化echarts实例
+	 	window.onload = function(){
+
+	    var vm = new Vue({
+	        el:'#content',
+	        data:{
+	        	cardId : parseInt(getUrlParam("id")),
+	        	city:null,
+	        	cardInfo:null,
+	        	pageQuery:{
+	        		params:{
+	        			operatorId:1,
+	        			cityId:71,
+	        		},
+	        		limit:3,
+	        		offset:1,
+	        	}
+	        	
+	        },
+	        created: function () {
+	        	var pageQuery = this.pageQuery;
+				$.ajax({
+	                type : "post",
+	                async : false,
+	                url : urlPre+"/number/query",
+	                data:pageQuery,
+	                dataType : "json",        //返回数据形式为json
+	                success : function(response) {
+	                	cardInfo = response.data;
+	                	
+	                },
+	                error : function(errorMsg) {
+	 					
+	                }
+	            });
+		        	
+       		},
+	        methods:{
+	            showSearch:function(){
+	            	
+	            },
+	        },
+	        watch: {
+	        	// 监听地图点击
+	            
+	        }
+	    });
+
+
+
+	}
+	})
+ 	
+	</script>
+

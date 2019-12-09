@@ -1,0 +1,662 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<title>号码详情页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="static/js/html5shiv.js"></script>
+      <script src="static/js/respond.min.js"></script>
+    <![endif]-->
+<link href="static/css/style.css" rel="stylesheet">
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script type="text/javascript" src="/static/js/config.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function (){
+	 	
+	    var urlPre = config.devPro.urlPre;
+		// 基于准备好的dom，初始化echarts实例
+	 	window.onload = function(){
+
+	    var vm = new Vue({
+	        el:'#content',
+	        data:{
+	        	cardId : parseInt(getUrlParam("id")),
+	        	city:null,
+	        	cardInfo:null,
+	        	
+	        },
+	        created: function () {
+	        	var cardInfo = null;
+				$.ajax({
+	                type : "get",
+	                async : false,
+	                url : urlPre+"/number/get/"+this.cardId,
+	                dataType : "json",        //返回数据形式为json
+	                success : function(response) {
+	                	cardInfo = response.data;
+	                	
+	                },
+	                error : function(errorMsg) {
+	 					
+	                }
+	            });
+
+	            this.cardInfo = cardInfo;
+	            this.city = change(cardInfo.cityId);
+		        	
+       		},
+	        methods:{
+	            showSearch:function(){
+	            	
+	            },
+	        },
+	        watch: {
+	        	// 监听地图点击
+	            
+	        }
+	    });
+
+	    var vm1 = new Vue({
+	        el:'#form1',
+	        data:{
+
+	        	postData:{
+	        		numberId:parseInt(getUrlParam("id")),
+	        	},
+
+
+	        	city:"广州市",
+	        	address:"广东省广州市",
+
+	        	cardId : parseInt(getUrlParam("id")),
+	        	cardInfo:null,
+	        	
+	        },
+	        created: function () {
+	        	var cardInfo = null;
+				
+
+	            this.cardInfo = cardInfo;
+		        	
+       		},
+	        methods:{
+	            showSearch:function(){
+	            	
+	            },
+	        },
+	        watch: {
+	        	// 监听地图点击
+	            
+	        }
+	    });
+
+
+
+
+
+	}
+	})
+ 	
+	</script>
+
+
+
+
+<style type="text/css">
+.yjbh {
+	height: 35px;
+	padding-top: 10px;
+}
+.yjbh a.telphone {
+	background: #70c916;
+}
+
+.yjbh a.telphone i {
+	display: inline-block;
+	background-size: 40px auto;
+	height: 16px;
+	background-position: 0px -35px;
+	width: 18px;
+	margin-bottom: -2px;
+}
+.yjbh a.jrdp {
+	background: #00a8ff;
+}
+.yjbh a {
+	display: block;
+	width: 47%;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	color: #FFF;
+	position: relative;
+	float: left;
+}
+.yjbh a.telphone {
+	background: #70c916;
+}
+.yjbh a:nth-child(odd) {
+	margin-right: 5%;
+}
+.yjbh a {
+	display: block;
+	width: 47%;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	color: #FFF;
+	position: relative;
+	float: left;
+}
+
+
+.icon_n {
+	background: url(static/images/icon_n.png) no-repeat;
+}
+
+.cus-input{border:none;}
+.box-rr{padding-left:80px;}
+.STYLE1 {color: #FF0000}
+.STYLE4 {color: #006600}
+.STYLE5 {color: #6600CC}
+.STYLE6 {color: #FF6600}
+</style>
+
+
+
+
+</head>
+<body id="body">
+<header class="headfixed">
+  <div class="top">
+  	<a class="return" href="javascript:history.back();">返回</a>
+    <div class="title"> 号码详情 </div>
+    <a class="home" id="menuTrigger" href="javascript:;">导航</a> 
+  </div>
+</header>
+
+
+<section class="p08 m08" id="content">
+  <ul class="box-m" style="margin:0px;">
+    <li>
+      <div class="box-l">&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;</div>
+      <div class="box-r telname">{{cardInfo.inumber}} <img id="sc_img" src="static/picture/shoucang.png" height="18" align="middle" style="vertical-align:middle; cursor:pointer" onMouseOver="this.style.border='1px #ff0000 solid;'" onMouseOut="this.style.border='1px #ffffff solid;'" ></div>
+    </li>
+    <li>
+      <div class="box-l">&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;格&nbsp;&nbsp;</div>
+      <div class="box-r">￥{{cardInfo.price}}</div>
+    </li>
+    <li>
+      <div class="box-l">&nbsp;归&nbsp;属&nbsp;地&nbsp;</div>
+      <div class="box-r">{{city}}</div>
+    </li>
+    <li>
+      <div class="box-l">&nbsp;内含话费&nbsp;</div>
+      <div class="box-r">￥{{cardInfo.includedFee}}</div>
+    </li>
+    <li>
+      <div class="box-l">&nbsp;微信/电话&nbsp;</div>
+      <div class="box-r">微信一: <span class="STYLE1">17788856669</span> 微信二:<span class="STYLE6"> 17788856669</span></div>
+    </li>
+	<li>
+      <div class="box-l">&nbsp;微信/电话&nbsp;</div>
+      <div class="box-r">微信三: <span class="STYLE4">17788856669</span> 微信四: <span class="STYLE5">17788856669</span></div>
+    </li>
+    <li>
+      <div class="box-l">&nbsp;详细介绍&nbsp;</div>
+      <div class="box-r">待定</div>
+    </li>
+
+  </ul>
+  <div class="yjbh">
+      <a class="telphone" href="tel:17788856669"><i class="icon_n"></i>电话联系</a>
+      <a class="jrdp" href="javascript:history.back();" style="float:right;"><i class="icon_n"></i>返回选号页</a>
+  </div>
+  
+  <div style="padding-bottom:8px;overflow:auto;"> </div>
+</section>
+<script>
+	var urlPre = config.devPro.urlPre;
+	function check(){
+		
+		if($('#Lxname').val()==''){
+			alert('请输入客户姓名');return false;
+		}
+		if($('#Lxtel').val()==''){
+			alert('请输入联系电话');return false;
+		}
+		if($('#Lxdz').val()==''){
+			alert('请输入送货地址');return false;
+		}
+		$("#numberId").val(parseInt(getUrlParam("id")));
+
+		$.ajax({
+		  type: "post",
+		  url: urlPre+"/order/insert",
+		  data: $("#form1").serialize(),
+		  success: function(response){
+			  	if(response.msg == "success"){
+					$("#form_dg").hide();
+			    	$("#tziframe").attr("src","order_msg.html?tel=17788856669");
+				}
+				
+ 				alert(response.msg);
+		  }
+		});
+	}
+	//收藏
+	$("#sc_img").click(function(){
+			if(confirm("确定将该号码收藏到订购记录吗?")){
+				  $.ajax({
+					type: "post",
+					url: "detail.html",
+					dataType : "json",
+					data: {"act":"shoucang","d":"47754743"},
+					
+					success: function(json){
+						alert(json.tishi);
+						
+					}
+				  });
+			}
+		});
+	
+	
+</script>
+<style>
+#mconter li div{ color:#F00;font-size:12px;}
+.li-l{ width:60px; font-size:12px; padding:0 5px;}
+ span.li-r2 input{float: left;}
+ span.li-r2 div{float: left; color:#F00;}
+#mconter li{ display:block;clear:both;}
+.col-lg-12{padding:0 18px;}
+</style>
+  <form action="" method="post"  id="form1">
+    <input type="hidden" id= "numberId" name="numberId" value="">
+<section class="p08 m08" id="form_dg">
+  <ul class="box-m" style="margin:0px;">
+    <li>
+      <div class="box-l">客户姓名</div>
+      <div class="box-r box-rr"><input type="text" name="customer" id="customer" class="cus-input" style="width:100%"></div>
+    </li>
+    <li>
+      <div class="box-l">联系电话</div>
+      <div class="box-r box-rr"><input type="text" name="contact" id="contact"  class="cus-input" style="width:100%"></div>
+    </li>
+    <li>
+      <div class="box-l">付款方式</div>
+      <div class="box-r box-rr"><select name="payChannel" id="payChannel" class="cus-input" style="width:100%">
+          	<option value="支付宝付款">支付宝付款</option>
+            <option value="淘宝交易">淘宝交易</option>
+            <option value="货到付款">货到付款</option>
+            <option value="见面交易">见面交易</option>
+          </select></div>
+    </li>
+    <li>
+      <div class="box-l">送货地址</div>
+      <div class="box-r box-rr"><input type="text" name="location" id="locationIp"  class="cus-input" style="width:100%"></div>
+    </li>
+    <li>
+      <div class="box-l">QQ号</div>
+      <div class="box-r box-rr"><input type="text" name="qq" id="qq"  class="cus-input" style="width:100%"></div>
+    </li>
+    <li>
+      <div class="box-l">微信号</div>
+      <div class="box-r box-rr"><input type="text" name="wx" id="wx"  class="cus-input" style="width:100%"></div>
+    </li>
+
+  </ul>
+    <div style="text-align:center;clear:both;margin: 10px 0px 0px 0px; ">
+      <input type="button" onClick="check()" class="s-btn"  value="立即订购">
+    </div>
+  
+</section>
+</form>
+
+<div >
+  
+
+
+<section class="p08 mb8">
+  <h3 class="num-tit">
+      <span>情侣号码推荐</span> 
+  </h3>
+  <article class="num-box" >
+  <ul class="num-list">
+          
+				<li><a href="detail.html?c=searchs&a=detail&id=47754743"><span class="hm">待定</span><span class="jg">卡费:￥345 话费:￥25</span></a></li>
+				<li><a href="detail.html?c=searchs&a=detail&id=47754743"><span class="hm">待定</span><span class="jg">卡费:￥345 话费:￥25</span></a></li>
+				
+      </ul>
+  </article>
+</section>
+
+
+<style type="text/css">
+<!--
+.STYLE2 {color: #FFFF00; }
+.foot{ background:#ededed;}
+.footnav {
+border-bottom: 1px solid #eeeeee;
+border-top: 1px solid #eeeeee;
+}
+
+.footnav li {
+display: block;
+width: 25%;
+padding: 10px 0;
+float: left;
+text-align: center;
+}
+.footnav li a {
+display: block;
+border-right: 1px solid #cbcbcb;
+width: 100%;
+font-size: 0.8em;
+color: #676767;
+}
+.foottu {
+	height: 45px;
+	padding: 10px 0;
+}
+.foottu a {
+display: block;
+width: 33.333%;
+height: 45px;
+float: left;
+position: relative;
+}
+.foottu a i.app_icon {
+background-position: -100px -167px;
+}
+.foottu a i {
+width: 45px;
+height: 45px;
+background-size: 250px auto;
+margin: 0 auto;
+display: block;
+}
+.foottu a i.mobile_icon {
+background-position: 0 -167px;
+}
+
+.foottu a i.web_icon {
+background-position: -50px -167px;
+}
+
+.copyright {
+border-top: 1px solid #eeeeee;
+text-align: center;
+font-size: 0.8em;
+color: #676767;
+line-height: 32px;
+margin:0px;
+}
+
+#tck{display:none; width: 100%; position: fixed; top: 0px; left: 0px; z-index: 1001; padding: 1px;height: 3822.09px; background: rgba(102, 102, 102, 0.498039); color:#000;}
+.jlkk { width: 280px; position: fixed;  background: #FFF; font-family: "黑体"; font-size: 18px; }
+.tc_zj{width: 280px; position: fixed; left: 50%; top:50%; padding: 1px; margin-left: -142px;
+    margin-top: -114px;   background: #fff;font-family: '黑体'; font-size: .9rem;}
+.tc_title { height: 30px; margin-top: 10px; border-bottom: 3px solid #308EF0; font-weight: 700; padding-left: 17px; font-size: 18px; background: #FFF; text-align:left;font-family: "黑体";}
+.tc_contact {  padding:10% 8%;  background: #FFF; text-align:left; }
+.tc_ewm { text-align:center; }
+.gb {height: 40px;background-color: #F5F5F5;line-height: 40px;text-align: center; }
+.gb a { color:#000000; text-decoration:none; display:block; margin:0 auto;}
+
+-->
+</style>
+<footer>
+<div class="foot">
+		<div class="footnav">
+            <ul>
+				<li><a href="about.html?d=13" rel="nofollow">关于我们</a></li>
+				<li><a href="about.html?d=14" rel="nofollow">交易方式</a></li>
+				<li><a href="about.html?d=15" rel="nofollow">联系我们</a></li>
+				<li><a href="about.html?d=16" rel="nofollow">诚邀合作</a></li>
+				<li><a href="about.html?d=17">资费中心</a></li>
+				<li><a href="about.html?d=18">号码常识</a></li>
+				<li><a href="news.html">新闻中心</a></li>
+				<li><a href="https://cxhftx.tmall.com/" rel="nofollow">淘宝店铺</a></li>
+			</ul>
+		</div>
+		<div class="foottu">
+			<a href="javascript:tanchu();"><i class="app_icon icon"></i></a>
+			<a href="/n"><i class="mobile_icon icon"></i></a>
+			<a href="/" target="_blank"><i class="web_icon icon"></i></a>
+		</div>
+        <div class="jlkk hidden" id="tck" style="display: none;">
+  <div class="tc_zj">
+  <div class="tc_title">搜号吧微信版</div>
+  <div class="tc_contact"> 在微信右上角添加朋友中搜索公众号"niuka168"点击关注，或者扫一扫下方二维码！随时随地买号卖号啦！
+  <div class="tc_ewm"><img src="static/picture/qrcode.jpg" ></div></div>
+  <div class="gb"><a class="close" href="javascript:guanbi();">我知道啦</a></div></div>
+</div>
+
+  <script>
+function guanbi(){
+document.getElementById("tck").style.display="none";
+}
+function tanchu(){
+document.getElementById("tck").style.display="block";
+}
+$(function () {
+'use strict'
+
+	var $cdTop = $('.cd-top')
+
+	$(window).on('scroll', function () {
+		var top = document.body.scrollTop
+		if (top > 200) {
+			$cdTop.show()
+		} else {
+			$cdTop.hide()
+		}
+	})
+
+	function runScroll() {
+		scrollTo(document.body, 0, 600);
+	}
+	$cdTop.on('click', runScroll)
+
+	function scrollTo(element, to, duration) {
+		if (duration <= 0) {
+			return
+		}
+		var difference = to - element.scrollTop
+		var perTick = difference / duration * 10
+		setTimeout(function() {
+			element.scrollTop = element.scrollTop + perTick
+			if (element.scrollTop == to) {
+				return
+			}
+			scrollTo(element, to, duration - 10)
+		}, 10)
+	}
+
+})
+
+	function getOuterHeight() {
+	    var b = document.documentElement, a = document.body;
+	    return Math.max(b.clientHeight, a.clientHeight, b.offsetHeight, a.offsetHeight, b.scrollHeight, a.scrollHeight)
+	}
+	$(function() {
+			$(window).on("scroll touchend", function() {
+	        var F = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+	        $('#loading').css({top: 200 + F + "px"})
+	   		 });
+			$('#menuTrigger').on("click",function(){
+	   			var b=getOuterHeight()-60;
+	   			$('#mMasklay').height(b);
+	   			$('#mMasklay').fadeToggle(200);
+	   			$('#mMenulay').slideToggle(200);
+	   		});
+	   		$('#mMasklay').on("click",function(){
+	   			$('#mMasklay').fadeOut(300);
+	   			$('#mMenulay').slideUp(300);
+	   		});
+		});
+
+</script>
+		<div class="copyright">Copyright©2008-2016sohaoba.com 版权所有</div>
+		
+	</div>
+  <div class="mMasklay" id="mMasklay" ></div>
+<div class="mMenulay" id="mMenulay" >
+		<ul class="navlist">
+		<li><a data-bn-ipg="right-nav-index" href="/n" class="">返回首页</a></li>
+		<li><a data-bn-ipg="right-nav-place" href="select.html" class="">选号大厅</a></li>
+		<li><a data-bn-ipg="right-nav-bbs" href="seits.html" class="">各地分站</a></li>
+		<li><a data-bn-ipg="right-nav-guide" href="HmDz.html" class="">号码定制</a></li>
+		<li><a data-bn-ipg="right-nav-app" href="news.html" class="">靓号资讯</a></li>
+	</ul>
+</div>
+
+
+
+<style type="text/css">
+<!--
+.nav4 {
+	height: 45px;
+}
+.nav4 ul {
+	position: fixed;
+	z-index: 200;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	border-top: 1px solid #cecdcd;
+	padding-top: 2px;
+	background: #f1f1f1;
+	margin:0px;
+}
+.nav4 li {
+	height: 45px;
+	border-bottom: 0;
+	border-right: 0;
+	position: relative;
+	float: left;
+	width: 25%;
+}
+.nav4 li>a {
+	font-size: 20px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	/* border: 1px solid #f9f8f9; */
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	border-bottom: 0;
+	display: block;
+	height: 45px;
+	text-align: center;
+	color: #5e5e5e;
+	padding-top: 26px;
+	text-decoration: none;
+}
+
+.nav4 li>a.icon-home {
+	background: url(static/images/icon-home.png) no-repeat center 1px;
+	background-size: 24px;
+}
+.nav4 li>a.icon-shop {
+	background: url(static/images/ico-shop.png) no-repeat center 1px;
+	background-size: 27px;
+}
+
+.nav4 li>a.icon-qq {
+	background: url(static/images/icon-qq.png) no-repeat center top;
+	background-size: 30px;
+}
+
+.nav4 li>a.icon-user {
+	background: url(static/images/icon-user.png) no-repeat center top;
+	background-size: 24px;
+}
+
+.nav4 li a label {
+	margin: 0 5px;
+	font-size: 12px;
+	display: block!important;
+	line-height: 18px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.cd-top {
+ display: none;
+  height:70px;
+  width:20px;
+  position: fixed;
+  bottom: 50px;
+  right: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  /* image replacement properties */
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  background: url(static/images/gotop.png) no-repeat ;
+  visibility: visible;
+  opacity: 0.5;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  border-radius: 40px;
+  z-index:1000;
+}
+.cd-top .cd-is-visible {
+  /* the button becomes visible */
+  visibility: visible;
+  opacity: 1;
+}
+.cd-top .cd-fade-out {
+  /* 如果用户继续向下滚动,这个按钮的透明度会变得更低 */
+  opacity: .5;
+}
+.no-touch .cd-top:hover {
+  background-color: #e86256;
+  opacity: 1;
+}
+
+/**/
+.slnum{ position:absolute;  left:0px; background:#ef4047;  padding:1px 6px;   margin: 0px 8px; cursor:pointer; color:#ffffff; border-radius: 50%;left: 55%;top: -5px; }
+
+-->
+</style>
+<a href="javascript:;" class="cd-top" style="display: inline;"></a>
+<div class="nav4">
+	<nav>
+		<div id="nav4_ul" class="nav_4">
+			<ul class="box">
+				<li>
+					<a href="/n" class="icon-home"><label>首页</label></a>
+				</li>
+				<li>
+                	                
+					<a href="Dgjl.html" class="icon-shop"><label>收藏记录</label></a>
+				</li>
+                <li>
+					<a href="https://cxhftx.tmall.com/" class="icon-qq" target="_blank"><label>在线客服</label></a>
+				</li>
+				<li>
+					<a href="seits.html" class="icon-user"><label>城市分站</label></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div id="nav4_masklayer" class="masklayer_div on">&nbsp;</div>
+
+</div>
+
+<iframe id="tziframe" src='' style='display:none'></iframe>
+</html>
