@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.muhuan.api.util.ValidateUtil;
 import com.muhuan.common.entity.Card;
 import com.muhuan.select.build.service.CardService;
+import com.muhuan.select.build.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pager.QueryCardPager;
 
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @ClassName CardController
@@ -25,9 +27,14 @@ import java.util.Map;
 //@CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 public class CardController extends BaseController<Card> {
 
+    private RedisUtils redisUtils = new RedisUtils();
+    Random random = new java.util.Random();
+
+    private final CardService service;
     @Autowired
     public CardController(CardService service) {
         super(service);
+        this.service = service;
     }
 
 
@@ -64,21 +71,22 @@ public class CardController extends BaseController<Card> {
     @RequestMapping(value = "/queryFlex")
     @ResponseBody
     public IPage<Card> queryFlex(QueryCardPager queryCardPager ) {
+
+//        if(redisUtils.hasKey(queryCardPager.toString())){
+//            System.out.print("存在！");
+//            IPage<Card> mresult = (IPage<Card>) redisUtils.get(queryCardPager.toString());
+//            return mresult;
+//        }
+
         Map<String,Object> params = queryCardPager.getParams();
         Page<Card> page = new Page<>();
         page.setCurrent(queryCardPager.getOffset());
         page.setSize(queryCardPager.getLimit()<100?queryCardPager.getLimit():100);
+
+
         QueryWrapper<Card> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id");
-        if(!ValidateUtil.isEmpty(params.get("operatorId"))){
-            wrapper.eq("operator_id",params.get("operatorId"));
-        }
-        if(!ValidateUtil.isEmpty(params.get("province"))){
-            wrapper.eq("province_id",params.get("province"));
-            if(!ValidateUtil.isEmpty(params.get("city"))){
-                wrapper.eq("city_id",params.get("city"));
-            }
-        }
+
 
         if(!ValidateUtil.isEmpty(((String)params.get("number")).replace("模糊搜索",""))){
 //            System.out.print("模糊搜索");
@@ -175,7 +183,25 @@ public class CardController extends BaseController<Card> {
                 reg += "[0-9]";
             }
         }
-        wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '"+reg+"'");
+        String operatorSearch = "";
+        if(!ValidateUtil.isEmpty(params.get("operatorId"))){
+            wrapper.eq("operator_id",params.get("operatorId"));
+//            operatorSearch = " and operator_id = "+params.get("operatorId");
+        }
+        String provinceSearch = "";
+        if(!ValidateUtil.isEmpty(params.get("province"))){
+            wrapper.eq("province_id",params.get("province"));
+            if(!ValidateUtil.isEmpty(params.get("city"))){
+                wrapper.eq("city_id",params.get("city"));
+//                provinceSearch = " and city_id = "+params.get("city");
+            }
+        }
+        int rnum= (random.nextInt(16)+1)*10000;
+
+//        wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '"+reg+"'");
+        wrapper.inSql("i_number", "SELECT t.i_number FROM (select i_number from select_card where i_number REGEXP '"+reg+"' LIMIT "+(rnum -10000)+","+ rnum +") as t");
+//        wrapper.inSql("i_number", "SELECT t.i_number FROM (select i_number from select_card where i_number REGEXP '"+reg+"'"+operatorSearch + provinceSearch+" LIMIT 10000) as t");
+
         if (!ValidateUtil.isEmpty(params.get("rule"))) {
             int rule = Integer.parseInt((String) params.get("rule"));
             switch (rule){
@@ -279,19 +305,21 @@ public class CardController extends BaseController<Card> {
                     break;
                 case 26:
                     // 中间AA
-                    wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '.([0-9])\\\\1{1}.'");
+                    wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '([0-9])\\\\1{1}'");
                     break;
                 case 27:
                     // 中间AABBB
-                    wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '.([0-9])\\\\1{1}([0-9])\\\\2{2}.'");
+                    wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '([0-9])\\\\1{1}([0-9])\\\\2{2}.'");
                     break;
                 case 28:
                     // 中间AAABBB
-                    wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '.([0-9])\\\\1{2}([0-9])\\\\2{2}.'");
+                    wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '([0-9])\\\\1{2}([0-9])\\\\2{2}.'");
                     break;
             }
         }
-        return service.queryByPage(page, wrapper);
+        IPage<Card> result = service.queryByPage(page, wrapper);
+//        redisUtils.set(queryCardPager.toString(), result,60*60 *10);
+        return result;
     }
 
 

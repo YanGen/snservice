@@ -17,6 +17,12 @@
             <groupId>com.muhuan</groupId>
             <artifactId>service-api</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

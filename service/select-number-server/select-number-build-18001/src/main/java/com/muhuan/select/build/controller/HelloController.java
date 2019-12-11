@@ -2,6 +2,8 @@ package com.muhuan.select.build.controller;
 
 import com.muhuan.api.bean.ajax.ResponseResult;
 import com.muhuan.api.util.ResultGeneratorUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 public class HelloController {
+    @Autowired
+    private RedisTemplate<String ,String> redisTemplate;
+
     @GetMapping("/hello")
     public ResponseResult hello(){
         return ResultGeneratorUtil.getResultSuccessWithData("hello");
