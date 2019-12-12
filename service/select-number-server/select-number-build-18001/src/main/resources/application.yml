@@ -46,7 +46,7 @@ spring:
     #redis 密码
     password: ud@redis
     #客户端超时时间单位是毫秒 默认是2000
-    timeout: 5000
+    timeout: 2000
     #最大空闲数
     maxIdle: 20
     #连接池的最大数据库连接数
