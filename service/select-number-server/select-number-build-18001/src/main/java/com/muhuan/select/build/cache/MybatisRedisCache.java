@@ -50,7 +50,7 @@ public class MybatisRedisCache implements Cache {
             redisTemplate = (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
         }
         if (value != null) {
-            redisTemplate.opsForValue().set(key.toString(), value,60*60);
+            redisTemplate.opsForValue().set(key.toString(), value);
         }
     }
 
