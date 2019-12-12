@@ -30,4 +30,6 @@ public class CardService extends BaseService<Card> {
         pager.setPages(50);
         return mapper.selectPage(pager, entityWrapper);
     }
+
+
 }

@@ -2,6 +2,8 @@ package com.muhuan.select.build.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.muhuan.common.entity.Card;
+import com.muhuan.select.build.cache.MybatisRedisCache;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -12,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @Version 1.0.0
  **/
 @Mapper
+@CacheNamespace(implementation= MybatisRedisCache.class,eviction=MybatisRedisCache.class)
 public interface CardMapper extends BaseMapper<Card> {
 
 }
