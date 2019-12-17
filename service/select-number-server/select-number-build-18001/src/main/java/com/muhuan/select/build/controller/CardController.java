@@ -3,6 +3,8 @@ package com.muhuan.select.build.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.muhuan.api.bean.ajax.ResponseResult;
+import com.muhuan.api.util.ResultGeneratorUtil;
 import com.muhuan.api.util.ValidateUtil;
 import com.muhuan.common.entity.Card;
 import com.muhuan.select.build.encapsulation.CardEncapsulation;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pager.QueryCardPager;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -39,15 +42,15 @@ public class CardController extends BaseController<Card> {
     }
 
 
-//    @ResponseBody
-//    @RequestMapping("/list/{operatorId}/{provinceId}/{cityId}")
-//    public ResponseResult list(@PathVariable Integer operatorId, @PathVariable Integer provinceId, @PathVariable Integer cityId) {
-//        Map<String, Object> columnMap = new HashMap<>();
-//        columnMap.put("operator_id", operatorId);
-//        columnMap.put("province_id", provinceId);
-//        columnMap.put("city_id", cityId);
-//        return ResultGeneratorUtil.getResultSuccessWithData(service.getByMap(columnMap));
-//    }
+    @ResponseBody
+    @RequestMapping("/list/{operatorId}/{provinceId}/{cityId}")
+    public ResponseResult list(@PathVariable Integer operatorId, @PathVariable Integer provinceId, @PathVariable Integer cityId) {
+        Map<String, Object> columnMap = new HashMap<>();
+        columnMap.put("operator_id", operatorId);
+        columnMap.put("province_id", provinceId);
+        columnMap.put("city_id", cityId);
+        return ResultGeneratorUtil.getResultSuccessWithData(service.getByMap(columnMap));
+    }
 
     /**
      * 卡号简单分页条件查询
@@ -73,12 +76,6 @@ public class CardController extends BaseController<Card> {
     @ResponseBody
     public IPage<Card> queryFlex(QueryCardPager queryCardPager ) {
 
-//        if(redisUtils.hasKey(queryCardPager.toString())){
-//            System.out.print("存在！");
-//            IPage<Card> mresult = (IPage<Card>) redisUtils.get(queryCardPager.toString());
-//            return mresult;
-//        }
-
         Map<String,Object> params = queryCardPager.getParams();
         Page<Card> page = new Page<>();
         page.setCurrent(queryCardPager.getOffset());
@@ -88,7 +85,6 @@ public class CardController extends BaseController<Card> {
         QueryWrapper<Card> wrapper = CardEncapsulation.queryFlexParamsToWrapper(params);
 
         IPage<Card> result = service.queryByPage(page, wrapper);
-//        redisUtils.set(queryCardPager.toString(), result,60*60 *10);
         return result;
     }
 

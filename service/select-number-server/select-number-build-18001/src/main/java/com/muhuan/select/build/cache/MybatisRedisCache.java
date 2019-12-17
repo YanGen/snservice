@@ -48,6 +48,7 @@ public class MybatisRedisCache implements Cache {
         if (redisTemplate == null) {
             //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
             redisTemplate = (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
+            redisTemplate.opsForValue().set("second","",30);
         }
         if (value != null) {
             redisTemplate.opsForValue().set(key.toString(), value);

@@ -38,7 +38,7 @@ public class CardEncapsulation {
 //            System.out.print("模糊搜索");
             String mhss = (String) params.get("number");
             if (!ValidateUtil.isEmpty((params.get("midnum")))){
-                mhss = "%" +mhss+"%";
+                mhss = mhss+"%";
             }
 
 
@@ -112,11 +112,11 @@ public class CardEncapsulation {
             if (shuwei.contains(",")){
                 String [] items = shuwei.split(",");
                 for(String item : items){
-                    wrapper.like("i_number", "%"+item+"%"+"%"+item+"%"+item+"%"+item+"%");
+                    wrapper.like("i_number", item+"%"+item+"%"+item+"%"+item+"%");
                 }
             }
             else {
-                wrapper.like("i_number", "%"+shuwei+"%"+"%"+shuwei+"%"+shuwei+"%"+shuwei+"%");
+                wrapper.like("i_number", shuwei+"%"+shuwei+"%"+shuwei+"%"+shuwei+"%");
             }
         }
 
@@ -129,20 +129,17 @@ public class CardEncapsulation {
                 reg += "[0-9]";
             }
         }
-        String operatorSearch = "";
         if(!ValidateUtil.isEmpty(params.get("operatorId"))){
             wrapper.eq("operator_id",params.get("operatorId"));
-//            operatorSearch = " and operator_id = "+params.get("operatorId");
         }
-        String provinceSearch = "";
         if(!ValidateUtil.isEmpty(params.get("province"))){
             wrapper.eq("province_id",params.get("province"));
             if(!ValidateUtil.isEmpty(params.get("city"))){
                 wrapper.eq("city_id",params.get("city"));
-//                provinceSearch = " and city_id = "+params.get("city");
             }
         }
-        int rnum= (random.nextInt(16)+1)*10000;
+
+        int rnum= (random.nextInt(16)+1)*10000; //随机切割大表 避免全表扫描
 
 //        wrapper.inSql("i_number", "select i_number from select_card where i_number REGEXP '"+reg+"'");
         wrapper.inSql("i_number", "SELECT t.i_number FROM (select i_number from select_card where i_number REGEXP '"+reg+"' LIMIT "+(rnum -10000)+","+ rnum +") as t");
