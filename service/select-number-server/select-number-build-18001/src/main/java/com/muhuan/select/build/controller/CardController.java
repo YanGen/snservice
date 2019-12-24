@@ -5,11 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.muhuan.api.bean.ajax.ResponseResult;
 import com.muhuan.api.util.ResultGeneratorUtil;
-import com.muhuan.api.util.ValidateUtil;
 import com.muhuan.common.entity.Card;
+import com.muhuan.select.build.annotation.AccessLimit;
 import com.muhuan.select.build.encapsulation.CardEncapsulation;
 import com.muhuan.select.build.service.CardService;
-import com.muhuan.select.build.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pager.QueryCardPager;
@@ -30,8 +29,6 @@ import java.util.Map;
 @RequestMapping("/number")
 //@CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 public class CardController extends BaseController<Card> {
-
-    private RedisUtils redisUtils = new RedisUtils();
 
 
     private final CardService service;
@@ -57,6 +54,7 @@ public class CardController extends BaseController<Card> {
      */
     @RequestMapping(value = "/query")
     @ResponseBody
+    @AccessLimit
     public IPage<Card> query(QueryCardPager queryCardPager ) {
         Page page = new Page();
         page.setCurrent(queryCardPager.getOffset());

@@ -1,7 +1,8 @@
-package com.muhuan.select.build.util;
+package com.muhuan.select.build.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class RedisUtils {
+@Service
+public class RedisService {
     @Autowired
     private RedisTemplate redisTemplate;
 
