@@ -1,0 +1,14 @@
+com\muhuan\util\ObjectTranscoder.class
+com\muhuan\controller\MailController.class
+com\muhuan\util\DESUtil.class
+com\muhuan\util\FieldAnnotationUtil.class
+com\muhuan\util\RedisKeyUtil.class
+com\muhuan\handler\GlobalExceptionHandler.class
+com\muhuan\controller\BaseController.class
+com\muhuan\service\BaseService.class
+com\muhuan\service\EmailService.class
+com\muhuan\MailSenderApplication.class
+com\muhuan\mapper\HelloMapper.class
+com\muhuan\config\BeanUtil.class
+com\muhuan\controller\HelloController.class
+com\muhuan\aop\RequestAspect.class

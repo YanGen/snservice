@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @ClassName IpLimitConfig
- * @Description TODO
+ * @Description TODO ip限流
  * @Author geng <yg.db@uniteddata.com>
  * @Date 2019/12/24
  * @Version 1.0.0
