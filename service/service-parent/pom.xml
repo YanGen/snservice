@@ -20,6 +20,7 @@
         <module>../service-api</module>
         <module>../seivice-base-provider</module>
         <module>../select-number-server</module>
+        <module>../mail-sender-server</module>
 <!--        <module>../things-register-server</module>-->
     </modules>
     <properties>
