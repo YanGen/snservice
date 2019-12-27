@@ -30,3 +30,5 @@ service/things-register-server/things-register-build-18004/target/
 service/things-register-server/things-register-common/target/
 
 service/guns-logs/
+
+service/mail-sender-server/mail-sender-server-build-18005/target/

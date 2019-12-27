@@ -1,7 +1,8 @@
 package com.muhuan.util;
 
 
-import com.muhuan.api.bean.Annotation.FieldAnnotation;
+
+import com.muhuan.api.bean.annotation.FieldAnnotation;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

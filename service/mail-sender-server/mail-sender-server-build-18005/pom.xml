@@ -41,15 +41,21 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
-        <!-- email-->
+        <!-- hutool-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <!-- hutool email-->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>mai-sender-server-build-18005</finalName>
+        <finalName>mail-sender-server-build-18005</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
