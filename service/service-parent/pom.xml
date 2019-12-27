@@ -21,7 +21,7 @@
         <module>../seivice-base-provider</module>
         <module>../select-number-server</module>
         <module>../mail-sender-server</module>
-<!--        <module>../things-register-server</module>-->
+        <!--        <module>../things-register-server</module>-->
     </modules>
     <properties>
         <project.version>1.0.0</project.version>

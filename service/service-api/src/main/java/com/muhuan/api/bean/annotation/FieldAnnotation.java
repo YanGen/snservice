@@ -20,3 +20,4 @@ public @interface FieldAnnotation {
     long longValue() default 0;
 
 }
+}
